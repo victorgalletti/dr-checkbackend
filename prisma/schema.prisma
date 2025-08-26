@@ -7,17 +7,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Paciente {
-  id          String   @id @default(uuid())
-  nome        String
-  email       String   @unique
-  cpf         String   @unique
-}
-
-model Agenda {
-  id           String   @id @default(uuid())
-  dataHora     DateTime
-  pacienteNome String
-  procedimento String
-  status       String
+model User {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+  email     String?  @db.VarChar
+  fullName  String?  @db.VarChar
+  password  String?  @db.VarChar
+  role      String   @default("user")
+  provider   String?  @db.VarChar
+  providerId String?  @unique @db.VarChar
 }
